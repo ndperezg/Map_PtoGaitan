@@ -6,47 +6,56 @@ rm -rf .gmt*
 #gmtset BASEMAP_TYPE plain
 #gmtset PLOT_DEGREE_FORMAT DDD
 #-------------------------------
-name=locations.ps
-namepdf=locations.pdf
+name=mapa_estaciones_seismicity.ps
+namepdf=mfoc_PT.pdf
 namejpg=mapa_presentacion_sep02.jpg
-
+mfoc_file=MECANISMO_PT.out
 #regions
 region1=-71.45/-71.25/3.75/3.95
 region2=-72.60/-70.4/3.2/4.6
 region3=-75/-70/2/5.5
 region4=-71.80/-71.1/3.6/4.1
 region5=-72.0/-71.9/3.6/4.2
+region6=-71.8/-71.1/3.65/4.2
+region7=-72.5/-70.5/3.3/4.5
 #colombia
 bounds=-82.0/-67.0/-4.0/14.0
 
 #cross section
-lon1=-71.8 #-71.0 -71.610
-lat1=3.8 #3.5 4.025
-lon2=-71 #-71.8 -71.250
-lat2=3.8 #4.2 3.750
+lon1=-71.65 #-71.0 -71.610
+lat1=3.89 #3.5 4.025
+lon2=-71.4 #-71.8 -71.250
+lat2=3.99 #4.2 3.750
+
+#cross section 2
+Lon1=-71.46
+Lat1=3.92
+Lon2=-71.22
+Lat2=3.8
 
 #options
-contour=1
+contour=0
 ilu=1
-pads=1
+pads=0
 stations_PRE=0
 names_PRE=0
 stations_RSNC=1
-stations_SUB=0
-names_SUB=0
+stations_SUB=1
+names_SUB=1
 seismicity_PRE=0
 seismicity_NEIC=0
-seismicity_RSNC=0
+seismicity_RSNC=1
 cross_section_RSNC=0
 cross_section_PRE=0
-compare_locations=1
+compare_locations=0
 square=0
-inset=0
-legend=1
-mfoc=1
+inset=1
+legend=0
+axes=0
+mfoc=0
 
 #map parameters
-region=$region4
+region=$region3
 west=`echo $region | awk 'BEGIN {FS="/"};{print $1}'`
 east=`echo $region | awk 'BEGIN {FS="/"};{print $2}'`
 north=`echo $region | awk 'BEGIN {FS="/"};{print $3}'`
@@ -59,20 +68,20 @@ paleta_SEIS=/home/nelson/mapa_cap1/depth.cpt
 paleta_PRE=/home/nelson/mapa_cap1/mefoc2.cpt
 
 #GMT commands
-psbasemap -Ba0.2f0.1SEWN -JM17.5 -R$region     -Xc -Yc -P -V -K > $name #0.2
+psbasemap -Ba1f1SEWN -JM17.5 -R$region     -Xc -Yc  -V -K > $name #0.2
  if [ $ilu = 1 ] ; then
-    grdimage $topo -C$paleta -B -J -I$topoIlu -R -P -V -O -K >> $name
+    grdimage $topo -C$paleta -B -J -I$topoIlu -R -V -O -K >> $name
 else 
     grdimage $topo -C$paleta -B -J -R -P -V -O -K >> $name
 fi
 if [ $contour = 1 ] ; then
-	grdcontour $topo -B -J -C100 -R -P -V -W0.08p,0/0/0 -GD10k -O -K>> $name
+	grdcontour $topo -B -J -C100 -R  -V -W0.08p,0/0/0 -GD10k -O -K>> $name
 fi
 
-pscoast -B -J -R$region  -Df   -Lf-71.25/3.7/3.5/15+l  -N2 -S255 -P -V -O -K >> $name # -T-71.15/4.0/1.5 -Lf-71.3/3.78/3.6/5+l    
+pscoast -B -J -R$region  -Df   -Lf-70.8/2.5/3.5/50+l  -N2 -S255 -P -V -O -K >> $name # -T-71.15/4.0/1.5 -Lf-71.3/3.78/3.6/5+l    
 
 if [ $seismicity_PRE = 1 ]; then
-    awk 'BEGIN {FS=","};{if (NR>1) print $6, $7, $5/1000, $8*0.1}' camporubiales_events_2015-08-25.csv | psxy -R -JM -Sc -W1/0 -C$paleta_PRE -O -K >> $name  
+    awk 'BEGIN {FS=","};{if (NR>1) print $6, $7, $5/1000, $8*0.1}' Camporubiales.csv | psxy -R -JM -Sc -W1/0 -C$paleta_PRE -O -K >> $name  
 fi    
 
 if [ $seismicity_NEIC = 1 ]; then
@@ -87,9 +96,15 @@ fi
 if [ $stations_PRE = 1 ]; then
 	awk 'BEGIN {FS=","};{if (NR>1) print $7, $8}' camporubiales_stations.csv | psxy -R -J -P -St0.36 -W0.2p,0/0/0 -G100/100/255 -O -K >> $name
 fi
+if [ $axes = 1 ]; then
+   #awk '{print $10,$11, $8,2*cos(($9*1.5*3.141592653589793)/180)}' paxes.txt >vectors.txt
+   awk '{print $13,$14, $8, 1.5}' paxes.txt >vectors.txt
+   psxy vectors.txt -R -J -SV1+jc+p -Gblue  -W3,blue -O -K >>$name
+   psxy vectors.txt -R -J -Sc0.15 -Gyellow  -W0.1p -O -K >>$name
+fi
 
 if [ $mfoc = 1 ]; then
-    awk '{if (NR==8) print $5, $3, $7, $11, $12, $13, $10, $15, $14, $1"-Mw:"$10}' mecanismos.out | psmeca -Sa1.5 -C1.5,1 -G255/0/0 -R -J -O -K>> $name
+    awk '{print $5, $3, $7, $11, $12, $13, $10, $15, $14, $16, $17, $1"-Mw:"$10}' $mfoc_file | psmeca -Sa2.0 -C0.5,1 -Gblack  -Fp -R -J -N -O -K>> $name
 fi
 
 if [ $pads = 1 ]; then
@@ -160,16 +175,28 @@ fi
 
 
 if [ $cross_section_PRE = 1 ]; then
-    psxy  -R -J -O -K -W1p,black << END >> $name
+    psxy  -R -J -O -K -W1.5p,black << END >> $name
 $lon1 $lat1
 $lon2 $lat2
 END
-  
+    psxy  -R -J -O -K -W1.5p,black << END >> $name
+$Lon1 $Lat1
+$Lon2 $Lat2
+END
     pstext -R -J -O -K -P -G<< EOF >> $name
 $lon1+0.001 $lat1 12 0 15 LB A 
 $lon2+0.001 $lat2 12 0 15 LT A'
 EOF
-     awk  'BEGIN {FS=","};{if (NR>1) print $6, $7, $5/1000, $8*0.1}' camporubiales_events_2015-08-25.csv | pscoupe -Aa$lon1/$lat1/$lon2/$lat2/90/100/-1/10f -Jx0.35/-0.20 -R -Sa1 -Fsc0.1 -W  -Z$paleta_PRE -O -K -L0.5p -B10/2WESn -X0.0 -Y-3.5 >> $name
+    pstext -R -J -O -K -P -G<< ABC >> $name
+$Lon1+0.001 $Lat1 12 0 15 LB B 
+$Lon2+0.001 $Lat2 12 0 15 LT B'
+ABC
+     awk  'BEGIN {FS=","};{if (NR>1) print $6, $7, $5/1000, $8*0.1}' Camporubiales.csv | pscoupe -Aa$lon1/$lat1/$lon2/$lat2/90/5/-1/10f -Jx0.5/-0.5 -R -Sa1 -Fsc0.1 -W  -Z$paleta_PRE -O -K -L0.5p -B10/2WESn -X20.0 -Y8.0 >> $name
+
+  
+     awk  'BEGIN {FS=","};{if (NR>1) print $6, $7, $5/1000, $8*0.1}' Camporubiales.csv | pscoupe -Aa$Lon1/$Lat1/$Lon2/$Lat2/90/10/-1/10f -Jx0.5/-0.5 -R -Sa1 -Fsc0.1 -W  -Z$paleta_PRE -O -K -L0.5p -B10/2WESn -X0.0 -Y-7.0 >> $name
+    
+
 fi
 
 if [ $seismicity_RSNC = 1 ]; then
@@ -185,7 +212,7 @@ if [ $seismicity_PRE = 1 ]; then
 fi
 
 if [ $inset = 1 ]; then
-   pscoast -JM3.5 -Bwesn -W0.5p -R$bounds -Y7.2 -X14.0 -Df -S0/75/255 -G250/235/215 -N1 -N20.001pblack -O -K >> $name
+   pscoast -JM3.5 -Bwesn -W0.5p -R$bounds -Y12.1 -X2.0 -Df -S0/75/255 -G250/235/215 -N1 -N20.001pblack -O -K >> $name
    psxy  -R -J -O -K -W1.5p,0/0/0  << END >> $name
 $west $south
 $east $south
@@ -203,7 +230,8 @@ fi
 
 
 #format convertion
-ps2pdf $name $namepdf
+#ps2pdf $name $namepdf
+ps2raster -Tf -V -A -P $name
 ps2epsi  $name
 #display $name &
-evince $namepdf &
+#evince $namepdf &
