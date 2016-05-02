@@ -1,0 +1,7 @@
+G 0.1c
+S 0.2c c 0.25c 255/0/0 0.05p 0.7c SGC
+S 0.2c c 0.25c 0/255/0 0.05p 0.7c Relocation
+S 0.2c c 0.25c 0/0/255 0.05p 0.7c Spectraseis
+S 0.2c c 0.25c 255/255/0 0.05p 0.7c NEIC
+S 0.2c d 0.25c 0/255/255 0.05p 0.7c Pads
+G 0.1c

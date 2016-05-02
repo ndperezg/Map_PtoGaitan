@@ -1,0 +1,14 @@
+time,latitude,longitude,depth,mag,magType,nst,gap,dmin,rms,net,id,updated,place,type
+2015-08-24T02:15:51.120Z,3.8399,-71.2138,14.18,4.4,mb,,101,2.762,0.99,us,us100034e9,2015-08-24T10:18:30.296Z,"106km S of Orocue, Colombia",earthquake
+2014-11-30T23:22:00.210Z,4.2444,-71.446,15.54,4.3,mb,,104,2.927,1.12,us,usc000t6u5,2015-02-24T00:35:14.040Z,"61km SSW of Orocue, Colombia",earthquake
+2014-08-09T00:30:53.650Z,3.6613,-71.3338,15.45,4.3,mb,,97,2.842,1.16,us,usb000s4w4,2014-11-07T21:47:36.000Z,"109km SE of Puerto Gaitan, Colombia",earthquake
+2014-06-25T07:27:40.390Z,3.8909,-71.4617,31.74,4.6,mb,,36,2.584,1.03,us,usc000rlph,2014-09-26T11:49:35.000Z,"83km SE of Puerto Gaitan, Colombia",earthquake
+2014-06-04T03:17:20.010Z,3.8372,-71.4163,13.27,3.8,mwr,,97,2.653,0.86,us,usc000rmyi,2014-08-30T17:02:53.000Z,"90km SE of Puerto Gaitan, Colombia",earthquake
+2014-05-26T23:57:22.000Z,3.787,-71.242,13.14,3.7,mwr,,141,2.803,1.31,us,usc000rezj,2014-08-23T08:36:50.000Z,"109km ESE of Puerto Gaitan, Colombia",earthquake
+2014-05-25T15:25:02.350Z,3.9972,-71.3981,14.7,4.5,mb,,75,2.543,0.83,us,usc000regj,2014-08-23T08:36:47.000Z,"83km ESE of Puerto Gaitan, Colombia",earthquake
+2014-05-13T18:07:31.080Z,3.8591,-71.4052,16.41,4.6,mb,,53,2.643,1.03,us,usb000qkvb,2014-08-06T00:55:35.000Z,"90km SE of Puerto Gaitan, Colombia",earthquake
+2014-04-23T15:19:25.890Z,3.9279,-71.4085,13.87,4.2,mb,,65,3.043,1.03,us,usb000qqsp,2014-07-14T20:11:12.000Z,"86km ESE of Puerto Gaitan, Colombia",earthquake
+2014-03-27T10:21:16.590Z,3.976,-71.4168,26.34,4.7,mb,,46,2.547,0.96,us,usc000nsv0,2014-05-29T23:32:06.000Z,"82km ESE of Puerto Gaitan, Colombia",earthquake
+2014-03-24T23:19:28.870Z,3.8764,-71.1903,15.14,4,mb,,72,2.77,1.33,us,usc000p35h,2014-05-24T00:54:44.000Z,"102km S of Orocue, Colombia",earthquake
+2014-03-15T06:55:41.050Z,3.9281,-71.3627,14.39,3.7,mwr,,58,2.618,0.85,us,usc000nnyn,2014-05-16T21:51:41.000Z,"90km ESE of Puerto Gaitan, Colombia",earthquake
+2014-02-25T13:18:07.850Z,3.858,-71.282,15.02,3.5,mwr,,70,3.185,0.9,us,usc000n4x8,2014-05-07T00:03:11.000Z,"102km ESE of Puerto Gaitan, Colombia",earthquake
