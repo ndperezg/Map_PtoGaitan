@@ -6,9 +6,7 @@ rm -rf .gmt*
 #gmtset BASEMAP_TYPE plain
 #gmtset PLOT_DEGREE_FORMAT DDD
 #-------------------------------
-name=cross_meca_prueba.ps
-namepdf=mfoc_PT.pdf
-namejpg=mapa_presentacion_sep02.jpg
+name=cross_meca.ps
 mfoc_file=MECANISMO_PT.out
 #regions
 region1=-71.45/-71.25/3.75/3.95
@@ -18,20 +16,24 @@ region4=-71.80/-71.1/3.6/4.1
 region5=-72.0/-71.9/3.6/4.2
 region6=-71.8/-71.1/3.65/4.2
 region7=-72.5/-70.5/3.3/4.5
+region8=-71.65/-71.45/3.85/4.05
+region9=-71.4/-71.2/3.75/3.95
+region10=-71.4/-71.25/3.75/3.9
 #colombia
 bounds=-82.0/-67.0/-4.0/14.0
+#Meta: region3
 
 #cross section
-lon1=-71.65 #-71.55  
-lat1=3.88 #3.992  
-lon2=-71.4 #-71.49 
-lat2=3.99 #3.855
+lon1=-71.55 # -71.65 
+lat1=3.992 # 3.88 
+lon2=-71.49 #-71.4 
+lat2=3.855 # 3.99
 
 #cross section 2
-Lon1=-71.46 #-71.38
-Lat1=3.92 #3.78 #3.92
-Lon2=-71.22 #-71.28 #-71.22
-Lat2=3.8 #3.98 #3.8
+Lon1=-71.38 #-71.46
+Lat1=3.78 #3.92
+Lon2=-71.28 #-71.22
+Lat2=3.98 #3.8
 
 #options
 contour=0
@@ -55,7 +57,7 @@ axes=0
 mfoc=1
 
 #map parameters
-region=$region6
+region=$region4
 west=`echo $region | awk 'BEGIN {FS="/"};{print $1}'`
 east=`echo $region | awk 'BEGIN {FS="/"};{print $2}'`
 north=`echo $region | awk 'BEGIN {FS="/"};{print $3}'`
@@ -97,8 +99,8 @@ if [ $stations_PRE = 1 ]; then
 	awk 'BEGIN {FS=","};{if (NR>1) print $7, $8}' camporubiales_stations.csv | psxy -R -J -P -St0.36 -W0.2p,0/0/0 -G100/100/255 -O -K >> $name
 fi
 if [ $axes = 1 ]; then
-   #awk '{print $10,$11, $8,2*cos(($9*1.5*3.141592653589793)/180)}' paxes.txt >vectors.txt
-   awk '{print $13,$14, $8, 1.5}' paxes.txt >vectors.txt
+   awk '{print $5,$3, $18,5*cos(($19*1.5*3.141592653589793)/180)}' $mfoc_file >vectors.txt
+   #awk '{print $13,$14, $8, 1.5}' paxes.txt >vectors.txt
    psxy vectors.txt -R -J -SV1+jc+p -Gblue  -W3,blue -O -K >>$name
    psxy vectors.txt -R -J -Sc0.15 -Gyellow  -W0.1p -O -K >>$name
 fi
@@ -215,8 +217,8 @@ if [ $seismicity_PRE = 1 ]; then
 fi
 
 if [ $inset = 1 ]; then
-   pscoast -JM3.5 -Bwesn -W0.5p -R$bounds -Y6.0 -X14.0 -Df -S0/75/255 -G250/235/215 -N1 -N20.001pblack -O -K >> $name
-   psxy  -R -J -O -K -W1.5p,0/0/0  << END >> $name
+   pscoast -JM3.5 -Bwesn -W0.5p -R$bounds -Y0.0 -X0.0 -Df -Swhite -G250/235/215 -N1 -N20.001pblack -O -K >> $name
+   psxy  -R -J -O -K -W1.5p,red  << END >> $name
 $west $south
 $east $south
 $east $north
