@@ -1,12 +1,12 @@
 # GMT 5 Session common arguments shelf
-BEGIN GMT 5.1.1
-B	a5:Profundidad (km):
-J	m
-JM	M17.5
+BEGIN GMT 5.1.2
+B	a2f0.5:Depth (km):/a50f50:Earthquakes:WesN
+J	X
+JM	M13.5
 Jm	m0.40
-Jx	x0.5/-0.5
-R	-70/-55/-10/4
-X	0.0
-Y	0.0
-L	16
+JX	X250/125
+R	-15/0/0/300
+X	-700
+Y	-4200
+L	1
 END

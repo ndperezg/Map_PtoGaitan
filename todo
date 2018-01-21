@@ -1,0 +1,4 @@
+for (( i=2; i<=70; i=i+1 ))
+do 
+	sh mapa_cap1.sh $i 
+done
